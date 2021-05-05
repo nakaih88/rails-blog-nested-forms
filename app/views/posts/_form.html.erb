@@ -2,7 +2,6 @@
   <% if @post.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@post.errors.count, "error") %> prohibited this post from being saved:</h2>
-
       <ul>
       <% @post.errors.full_messages.each do |msg| %>
         <li><%= msg %></li>
@@ -10,7 +9,6 @@
       </ul>
     </div>
   <% end %>
-
   <div class="field">
     <%= f.label :name %><br>
     <%= f.text_field :name %><br>
@@ -21,10 +19,14 @@
 
   <div class="field">
     <%= f.collection_check_boxes :tag_ids, Tag.all, :id, :name %><br>
+      <%= f.fields_for :tags, @post.tags.build do |tags_fields| %>
+      <%= tags_fields.label :name %>
+      <%= tags_fields.text_field :name %>
+    <% end %>
   </div>
 
   <div class="actions">
     <%= f.submit %>
-  </div>
+  </div> 
 
 <% end %>
